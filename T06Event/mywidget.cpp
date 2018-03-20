@@ -1,4 +1,5 @@
 ﻿#include "mywidget.h"
+#include "MyApplication.h"
 #include <QApplication>
 #include <QEvent>
 #include <QDebug>
