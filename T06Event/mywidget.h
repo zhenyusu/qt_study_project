@@ -2,6 +2,9 @@
 #define MYWIDGET_H
 #include <QWidget>
 #include <QEvent>
+#include <QKeyEvent>
+#include <QMouseEvent>
+#include <QPushButton>
 class MyWidget : public QWidget
 {
     Q_OBJECT
@@ -12,10 +15,11 @@ public:
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
-    //不要用
-    void mouseDoubleClickEvent(QMouseEvent *);
+
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *event);
+
+    QPushButton * button;
 
 signals:
 

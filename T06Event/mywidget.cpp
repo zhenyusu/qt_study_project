@@ -4,8 +4,13 @@
 #include <QDebug>
 #include <QPoint>
 #include <QMouseEvent>
+#include <QKeyEvent>
 MyWidget::MyWidget(QWidget *parent) : QWidget(parent)
 {
+    button = new QPushButton("OK",this);
+    button->setDefault(true);
+    //鼠标不需要按下，MouseMove就能得到调用
+    this->setMouseTracking(true);
 }
 
 // QApplication 先得到->具体应该处理的窗口::event()->event()根据消息的类型来调用具体的虚函数
@@ -24,22 +29,40 @@ bool MyWidget::event(QEvent *ev){
 
 //打印鼠标位置
 void MyWidget::mousePressEvent(QMouseEvent *ev){
-
+#if 0
     QPoint pt = ev->pos();
     qDebug() << pt;
     //判断是左键是否被按下
     if(ev->button() == Qt::LeftButton){
 
     }
+    //判断shift+鼠标
     if(ev->modifiers() == Qt::ShiftModifier){
         qDebug() << "shift press";
     }
+#endif
+    //判断ctrl+鼠标
+    if(ev->modifiers()==Qt::ControlModifier){
+        //handle with control;
+        return;
+
+    }
+    // handle2 without control;
 }
 
+//鼠标移动事件(需要点击左键移动)
+void MyWidget::mouseMoveEvent(QMouseEvent *){
+    static int i = 0;
+    qDebug()<<i++;
+}
 
-void MyWidget::mouseMoveEvent(QMouseEvent *){}
-void MyWidget::keyPressEvent(QKeyEvent *){}
+//响应键盘按下事件
+void MyWidget::keyPressEvent(QKeyEvent *ev){
+    int key = ev->key();
+    qDebug() << (char)key;
+}
 void MyWidget::keyReleaseEvent(QKeyEvent *){}
+void MyWidget::mouseReleaseEvent(QMouseEvent *){}
 
 int main(int argc, char *argv[])
 {
